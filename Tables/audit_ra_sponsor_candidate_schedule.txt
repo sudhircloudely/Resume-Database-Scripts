@@ -1,0 +1,13 @@
+CREATE TABLE `audit_ra_sponsor_candidate_schedule` (
+  `candidate_id` int(11) DEFAULT NULL,
+  `sponsor_id` int(11) DEFAULT NULL,
+  `interview` varchar(100) DEFAULT NULL,
+  `hired` varchar(100) DEFAULT NULL,
+  `interview_date` date DEFAULT NULL,
+  `hiring_date` date DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `ra_application_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;

@@ -1,0 +1,35 @@
+CREATE DEFINER=`abi_newadmn`@`%` TRIGGER `abi_newadmin`.`audit_ra_sponsor_candidate_schedule_trg` BEFORE UPDATE ON abi_newadmin.ra_sponsor_candidate_schedule FOR EACH ROW
+BEGIN
+  
+insert into audit_ra_sponsor_candidate_schedule
+(
+candidate_id,
+sponsor_id,
+interview,
+hired,
+interview_date,
+hiring_date,
+created_by,
+created_date,
+modified_by,
+modified_date,
+ra_application_id
+)
+values
+(
+old.candidate_id,
+old.sponsor_id,
+old.interview,
+old.hired,
+old.interview_date,
+old.hiring_date,
+old.created_by,
+old.created_date,
+old.modified_by,
+old.modified_date,
+old.ra_application_id
+);
+
+
+
+End;

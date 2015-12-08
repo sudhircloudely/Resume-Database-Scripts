@@ -1,0 +1,31 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.insert_sponsor_email_prc;
+CREATE PROCEDURE abi_newadmin.`insert_sponsor_email_prc`( in pemail varchar(255) )
+Begin
+
+insert into ra_sponsor_users
+(email_id, password,first_name,last_name,organization,job_title,created_by,created_date,site_year,old_sponsor_id)
+select email_id, password,first_name,last_name,organization,job_title,created_by,created_date,site_year,sponsor_id 
+from SPONSOR_USERS
+where
+upper(email_id) = upper(pemail);
+
+insert into ra_sponsor_candidate_schedule
+(sponsor_id,interview,hired,interview_date,hiring_date,ra_application_id)
+select rsu.sponsor_id,sc.interview,sc.hired,sc.interview_date,sc.hiring_date,get_ra_application_id_fnc(sc.resume_id)
+from SPONSOR_CANDIDATE_SCHEDULE sc,
+     ra_sponsor_users rsu
+where 
+sc.sponsor_id = rsu.old_sponsor_id and
+upper(rsu.email_id) = upper(pemail);
+
+insert into ra_sponsor_resume_view_history
+(sponsor_id,ra_application_id)
+select rsu.sponsor_id,get_ra_application_id_fnc(sr.resume_id)
+from SPONSOR_RESUME_VIEW_HISTORY sr,
+     ra_sponsor_users rsu
+where
+sr.sponsor_id = rsu.old_sponsor_id and
+upper(rsu.email_id) = upper(pemail);
+
+
+End;

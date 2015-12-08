@@ -1,0 +1,43 @@
+CREATE DEFINER=`abi_newadmn`@`%` TRIGGER `abi_newadmin`.`audit_ra_app_career_information_trg` BEFORE UPDATE ON abi_newadmin.audit_ra_app_career_information FOR EACH ROW
+BEGIN
+  
+    INSERT INTO audit_ra_app_career_information
+  (
+  ra_career_inf_id,
+  ra_application_id ,
+  acadamic_program ,
+  acadamic_position ,
+  nonacadamic_position ,
+  employeement_type ,
+  area_intrest ,
+  current_job_status ,
+  start_employeement ,
+  find_employeement ,
+  additional_comment ,
+  break_question_1 ,
+  break_question_2 ,
+  created_by ,
+  created_date
+  )
+  values
+  (
+  old.ra_career_inf_id ,
+  old.ra_application_id ,
+  old.acadamic_program ,
+  old.acadamic_position ,
+  old.nonacadamic_position ,
+  old.employeement_type ,
+  old.area_intrest ,
+  old.current_job_status ,
+  old.start_employeement ,
+  old.find_employeement ,
+  old.additional_comment ,
+  old.break_question_1 ,
+  old.break_question_2 ,
+  old.created_by ,
+  old.created_date
+  ); 
+  
+ 
+  
+  END;

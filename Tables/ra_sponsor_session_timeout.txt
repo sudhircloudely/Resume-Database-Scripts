@@ -1,0 +1,6 @@
+CREATE TABLE `ra_sponsor_session_timeout` (
+  `sponsor_id` int(11) DEFAULT NULL,
+  `time_in` datetime DEFAULT NULL,
+  `time_out` datetime DEFAULT NULL,
+  KEY `fk_ra_sponsor_session_timeout` (`sponsor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

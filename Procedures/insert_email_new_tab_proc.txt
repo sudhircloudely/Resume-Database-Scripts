@@ -1,0 +1,208 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.insert_email_new_tab_proc;
+CREATE PROCEDURE abi_newadmin.`insert_email_new_tab_proc`(IN p_email varchar(255) )
+Begin
+
+/* Insert into ra_application */
+insert into  ra_application
+(
+first_name,
+last_name,
+organization,
+phone,
+address,
+city,
+ra_state_id,
+region_province,
+postal_zip_code,
+ra_country_id,
+us_citizen,
+us_work_permit,
+site,
+india_citizen,
+india_work_permit,
+attending_abi_local,
+contact_menthod,
+attending_GHC,
+resume_name,
+created_by,
+created_date,
+resumeid,
+applicant_type
+)
+select 
+firstname,
+lastname,
+affiliation,
+phone,
+address,
+city,
+state,
+region,
+zipcode,
+country, 
+us_citizen_2,
+us_citizen,
+site_year,
+null,
+india_citizen,
+attending_abi_local,
+contactPreference,
+attendingGHC,
+resume_name,
+'sudhirn',
+now(),
+resumeid,
+update_applicant_type_fnc(resumeid)
+from
+resumeApplicants2015
+where
+email = p_email;
+
+
+/* Insert into ra_user */
+insert into ra_user 
+(ra_application_id,emailid,password,auth_key,password_reset_token,site,resumeid)
+select rap.ra_application_id,rau.emailid,rau.password,null as auth_key,null as password_reset_token,ra.site_year,ra.resumeid
+from
+resumeApplicants2015 AS ra, resumeApplicants2015_user AS rau,ra_application rap
+where
+ra.resumeID = rau.resumeID and
+ra.resumeID = rap.resumeID and
+ra.email = p_email;
+
+/* Insert into ra_app_student_information */
+insert into ra_app_student_information
+(ra_application_id,ra_student_gpa_id,ra_student_major_id,ra_student_edu_id,created_by,created_date,resumeid)
+select 
+rap.ra_application_id,ra.gpa,ra.major,ra.edu_status,'sudhirn',now(),ra.resumeid 
+from resumeApplicants2015 ra,
+     ra_application rap
+where
+ra.resumeID = rap.resumeID and
+ra.email = p_email;
+ 
+ 
+/* Insert into ra_app_professional_information */ 
+insert into ra_app_professional_information
+( ra_application_id,year_experience,current_position,current_title,ra_industry_id,industry_experience_other,skills,resumeid) 
+ select 
+    rap.ra_application_id,
+   ra.questionFirst,ra.questionSecond,ra.questionThird,  
+ CONCAT_WS(',',ra_standard_industry_fnc(1,ra.experience1), 
+        ra_standard_industry_fnc(2,ra.experience2), 
+        ra_standard_industry_fnc(3,ra.experience3), 
+        ra_standard_industry_fnc(4,ra.experience4), 
+        ra_standard_industry_fnc(5,ra.experience5), 
+        ra_standard_industry_fnc(11,ra.experience6),        
+        ra_standard_industry_fnc(12,ra.experience8),
+        ra_standard_industry_fnc(13,ra.experience9),
+        ra_standard_industry_fnc(14,ra.experience10),
+        ra_standard_industry_fnc(15,ra.experience11),
+        ra_standard_industry_fnc(6,ra.experience12),
+        ra_standard_industry_fnc(7,ra.experience13),
+        ra_standard_industry_fnc(8,ra.experience14),
+        ra_standard_industry_fnc(9,ra.experience15),
+        ra_standard_industry_fnc(16,ra.experience16),
+        ra_standard_industry_fnc(17,ra.experience17),
+        ra_standard_industry_fnc(18,ra.experience18),
+        ra_standard_industry_fnc(19,ra.experience19),
+        ra_standard_industry_fnc(20,ra.experience20),
+        ra_standard_industry_fnc(10,ra.experience21)
+        )  as  ra_industry_id,
+ ra.experience7,ra.skills,ra.resumeID
+ from resumeApplicants2015 ra,
+      ra_application rap
+where
+ra.resumeID = rap.resumeID and
+ra.email = p_email;
+ 
+ 
+/* Insert into ra_app_career_information */ 
+insert into ra_app_career_information
+ ( ra_application_id,
+ acadamic_program,
+ acadamic_position,      
+ nonacadamic_position,    
+ employeement_type,      
+ area_intrest ,        
+ current_job_status,
+ start_employeement,
+ find_employeement,
+ additional_comment,
+ break_question_1,
+ break_question_2,
+ resumeid
+) 
+ select 
+   rap.ra_application_id,
+    CONCAT_WS(',',
+       ra_standard_carrer_fnc(29,'academic_programs',ra.interest1),
+       ra_standard_carrer_fnc(30,'academic_programs',ra.interest2),
+       ra_standard_carrer_fnc(31,'academic_programs',ra.interest3)
+       )
+       as acadamic_program,    
+ 
+      CONCAT_WS(',',
+       ra_standard_carrer_fnc(32,'academic_positions',ra.interest4),
+       ra_standard_carrer_fnc(33,'academic_positions',ra.interest5),
+       ra_standard_carrer_fnc(34,'academic_positions',ra.interest6),
+       ra_standard_carrer_fnc(35,'academic_positions',ra.interest7),
+       ra_standard_carrer_fnc(36,'academic_positions',ra.interest12)
+       )
+       as academic_positions, 
+ 
+    CONCAT_WS(',',
+       ra_standard_carrer_fnc(37,'non_academic_positions',ra.interest8),
+       ra_standard_carrer_fnc(38,'non_academic_positions',ra.interest9),
+       ra_standard_carrer_fnc(39,'non_academic_positions',ra.interest10),
+       ra_standard_carrer_fnc(40,'non_academic_positions',ra.interest11)        
+       )
+       as non_academic_positions, 
+ 
+    CONCAT_WS(',',ra_standard_carrer_fnc(41,'employment_type',ra.interest12),  
+       ra_standard_carrer_fnc(42,'employment_type',ra.interest13),
+       ra_standard_carrer_fnc(43,'employment_type',ra.interest14) ) as employeement_type,
+         
+         CONCAT_WS(',', ra_standard_carrer_fnc(1,'interest',ra.cat1), 
+         ra_standard_carrer_fnc(2,'interest',ra.cat2),
+         ra_standard_carrer_fnc(4,'interest',ra.cat3), 
+         ra_standard_carrer_fnc(5,'interest',ra.cat4),
+         ra_standard_carrer_fnc(6,'interest',ra.cat5),
+         ra_standard_carrer_fnc(7,'interest',ra.cat6),
+         ra_standard_carrer_fnc(8,'interest',ra.cat7),
+         ra_standard_carrer_fnc(9,'interest',ra.cat8),
+         ra_standard_carrer_fnc(10,'interest',ra.cat9),
+         ra_standard_carrer_fnc(11,'interest',ra.cat10),
+         ra_standard_carrer_fnc(12,'interest',ra.cat11),
+         ra_standard_carrer_fnc(13,'interest',ra.cat12),
+         ra_standard_carrer_fnc(14,'interest',ra.cat13),
+         ra_standard_carrer_fnc(15,'interest',ra.cat14),
+         ra_standard_carrer_fnc(16,'interest',ra.cat15),
+         ra_standard_carrer_fnc(17,'interest',ra.cat16),
+         ra_standard_carrer_fnc(18,'interest',ra.cat17),
+         ra_standard_carrer_fnc(19,'interest',ra.cat18),
+         ra_standard_carrer_fnc(20,'interest',ra.cat19),
+         ra_standard_carrer_fnc(21,'interest',ra.cat20),
+         ra_standard_carrer_fnc(22,'interest',ra.cat21),
+         ra_standard_carrer_fnc(23,'interest',ra.cat22),
+         ra_standard_carrer_fnc(24,'interest',ra.cat23),
+         ra_standard_carrer_fnc(25,'interest',ra.cat24),
+         ra_standard_carrer_fnc(26,'interest',ra.cat25),
+         ra_standard_carrer_fnc(27,'interest',ra.cat26),
+         ra_standard_carrer_fnc(28,'interest',ra.cat27),
+         ra_standard_carrer_fnc(3,'interest',ra.cat28)
+         ) as interest,
+        ra.currentJobStatus,
+        ra.timeFrameAvailable,
+        ra.locationPreference,
+        ra.comment,
+        ra.breakquestion_1,
+        ra.breakquestion_2,
+        ra.resumeID
+from resumeApplicants2015 ra,
+      ra_application rap
+where
+ra.resumeID = rap.resumeID and
+ra.email = p_email;
+
+End;

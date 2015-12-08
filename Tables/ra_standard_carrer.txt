@@ -1,0 +1,10 @@
+CREATE TABLE `ra_standard_carrer` (
+  `ra_career_id` int(11) NOT NULL AUTO_INCREMENT,
+  `prefix` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ra_career_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;

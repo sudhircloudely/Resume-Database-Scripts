@@ -1,0 +1,5 @@
+CREATE TABLE `states` (
+  `state` varchar(22) NOT NULL,
+  `state_code` char(2) NOT NULL,
+  PRIMARY KEY (`state_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

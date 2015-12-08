@@ -1,0 +1,245 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.insert_ra_application_prc;
+CREATE PROCEDURE abi_newadmin.`insert_ra_application_prc`(
+
+ /* Application table parameter */
+ IN p_first_name	 varchar(255),
+ IN p_last_name	   varchar(255),
+ IN p_organization	  varchar(255),
+ IN p_phone           varchar(255),
+ IN p_address	     varchar(255), 
+ IN p_city	  varchar(255),
+ IN p_ra_state_id	  varchar(255),
+ IN p_region_province	  varchar(255),
+ IN p_postal_zip_code	  varchar(255),
+ IN p_ra_country_id	  varchar(255),
+ IN p_us_citizen	  varchar(255),
+ IN p_us_work_permit	  varchar(255),
+ IN p_site	  varchar(255),
+ IN p_india_citizen	  varchar(255),
+ IN p_india_work_permit	  varchar(255),
+ IN p_attending_abi_local   varchar(255),
+ IN p_resume_name	  varchar(255),
+ IN p_contact_menthod varchar(255),
+ IN p_attending_GHC varchar(255),
+ IN p_created_by	  varchar(255), 
+ IN p_applicant_type varchar(255),
+ 
+  /* User table parameters */
+ IN  p_emailid	varchar(255),
+ IN  p_password	varchar(255),
+ IN  p_auth_key	varchar(255),
+ IN  p_password_reset_token	varchar(255),
+ 
+ /* Student Information table parameters*/
+ IN p_ra_student_gpa_id varchar(255), 
+ IN p_ra_student_major_id varchar(255), 
+ IN p_ra_student_edu_id varchar(255),   
+ 
+ /* Professional Information table parameters*/
+ IN p_year_experience  varchar(255),	 
+ IN p_current_position  varchar(255),
+ IN p_current_title  varchar(255),	 
+ IN p_ra_industry_id  varchar(255),	 
+ IN p_industry_experience_other  varchar(255), 
+ IN p_skills  varchar(255),
+ 
+  /* Carrer Information table parameters */
+ IN p_acadamic_program varchar(255),
+ IN p_acadamic_position varchar(255),
+ IN p_nonacadamic_position varchar(255),
+ IN p_employeement_type varchar(255),
+ IN p_area_intrest varchar(255),
+ IN p_current_job_status varchar(255),
+ IN p_start_employeement varchar(255),	
+ IN p_find_employeement varchar(255),
+ IN p_additional_comment varchar(255),
+ IN p_break_question_1 varchar(255),	
+ IN p_break_question_2 varchar(255), 
+  
+  /* Out parameter to check unique email */
+ OUT o_unique_email  integer
+)
+BEGIN
+
+DECLARE l_ra_application_id varchar(255);
+DECLARE count_email integer;
+
+    /* Check email exist of not in table */
+  SELECT count(emailid) into count_email from ra_user where upper(emailid) = upper(p_emailid);  
+      
+    IF ( count_email > 0 ) THEN     
+    SET o_unique_email = 1;         /* Out Parameter is set to 1 */
+    
+   ELSE 
+    
+    START TRANSACTION; /* Checks for multiple transactions and allows only one */
+ 
+/* Insert into Application Table */
+insert into ra_application
+(  first_name,	 
+  last_name,	 
+  organization,	 
+  phone, 
+  address,	 
+  city,	 
+  ra_state_id,	 
+  region_province,	 
+  postal_zip_code,	 
+  ra_country_id,	 
+  us_citizen,	 
+  us_work_permit,	 
+  site,	 
+  india_citizen,	 
+  india_work_permit,	 
+  attending_abi_local,  
+  attending_GHC,   
+  contact_menthod,
+  resume_name,	 
+  created_by,
+  created_date,
+  applicant_type 
+ 	  
+) values
+(
+	p_first_name,	 
+  p_last_name,	 
+  p_organization,	 
+  p_phone, 
+  p_address,	 
+  p_city,	 
+  p_ra_state_id,	 
+  p_region_province,	 
+  p_postal_zip_code,	 
+  p_ra_country_id,	 
+  p_us_citizen,	 
+  p_us_work_permit,	 
+  p_site,	 
+  p_india_citizen,	 
+  p_india_work_permit,	 
+  p_attending_abi_local,  
+  p_attending_GHC, 
+  p_contact_menthod,
+  p_resume_name,	 
+  p_created_by,
+  now(),
+  p_applicant_type 
+  );	  
+
+commit;
+ 
+
+  SELECT max(ra_application_id) into l_ra_application_id from ra_application;
+  
+/* Insert into User Table */    
+insert into ra_user
+(
+  ra_application_id,
+  emailid,	 
+  password,	 
+  auth_key,	 
+  password_reset_token,	 
+  created_by,
+  created_date,
+  site
+  )
+  values
+  (l_ra_application_id,
+   p_emailid,	 
+   MD5(p_password),	 
+   p_auth_key,	 
+   p_password_reset_token,
+   p_created_by,
+   CURDATE(),
+   p_site
+   );
+   
+   commit;
+
+    /* Insert into Student Information Table */
+  insert into ra_app_student_information
+(
+ ra_application_id,
+ ra_student_gpa_id,
+ ra_student_major_id,
+ ra_student_edu_id,
+ created_by,
+ created_date 
+ ) 
+ values
+ (
+ l_ra_application_id,
+ p_ra_student_gpa_id,
+ p_ra_student_major_id,
+ p_ra_student_edu_id,
+ p_created_by,
+ CURDATE() 
+ ); 
+   
+   commit;
+   
+insert into ra_app_professional_information
+(
+ ra_application_id,	 
+ year_experience,	 
+ current_position,	 
+ current_title,	 
+ ra_industry_id,	 
+ industry_experience_other,	  
+ skills,	  
+ created_by,	 
+ created_date
+ )
+  values
+ (
+  l_ra_application_id,	 
+  p_year_experience,	 
+  p_current_position,	 
+  p_current_title,	 
+  p_ra_industry_id,	 
+  p_industry_experience_other,	  
+  p_skills,	  
+  p_created_by,	 
+  CURDATE() 
+  );   
+  
+  
+  insert into ra_app_career_information
+(
+ ra_application_id, 
+ acadamic_program,
+ acadamic_position,
+ nonacadamic_position,
+ employeement_type,
+ area_intrest,
+ current_job_status,	
+ start_employeement,	
+ find_employeement,	
+ additional_comment,
+ break_question_1,	
+ break_question_2,
+ created_by,	
+ created_date
+)
+values
+(
+ l_ra_application_id,	
+ p_acadamic_program,
+ p_acadamic_position,
+ p_nonacadamic_position,
+ p_employeement_type,
+ p_area_intrest, 
+ p_current_job_status,	
+ p_start_employeement,	
+ p_find_employeement,	
+ p_additional_comment,
+ p_break_question_1,	
+ p_break_question_2,
+ p_created_by,
+ CURDATE() 
+ );
+  
+   
+ END IF;
+  
+  
+END;

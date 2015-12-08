@@ -1,0 +1,19 @@
+CREATE TABLE `ra_user` (
+  `ra_user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ra_application_id` int(11) DEFAULT NULL,
+  `emailid` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `sfdc_leadid` varchar(255) DEFAULT NULL,
+  `auth_key` varchar(255) DEFAULT NULL,
+  `password_reset_token` varchar(255) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `resumeid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ra_user_id`),
+  UNIQUE KEY `ux_ra_user` (`emailid`),
+  KEY `fk_app_user` (`ra_application_id`),
+  CONSTRAINT `fk_app_user` FOREIGN KEY (`ra_application_id`) REFERENCES `ra_application` (`ra_application_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6837 DEFAULT CHARSET=latin1;

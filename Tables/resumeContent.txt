@@ -1,0 +1,8 @@
+CREATE TABLE `resumeContent` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resumeID` int(11) NOT NULL,
+  `content` text,
+  PRIMARY KEY (`id`),
+  KEY `resumeID` (`resumeID`),
+  FULLTEXT KEY `content` (`content`)
+) ENGINE=MyISAM AUTO_INCREMENT=1018 DEFAULT CHARSET=latin1;

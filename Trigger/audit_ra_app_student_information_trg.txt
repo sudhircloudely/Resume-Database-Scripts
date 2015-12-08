@@ -1,0 +1,31 @@
+CREATE DEFINER=`abi_newadmn`@`%` TRIGGER `abi_newadmin`.`audit_ra_app_student_information_trg` BEFORE UPDATE ON abi_newadmin.ra_app_student_information FOR EACH ROW
+BEGIN
+  
+    INSERT INTO audit_ra_app_student_information
+  (
+  ra_student_id ,
+  ra_application_id ,
+  ra_student_gpa_id ,
+  ra_student_major_id ,
+  ra_student_edu_id ,
+  created_by ,
+  created_date ,
+  modified_by ,
+  modified_date
+  )
+  values
+  (
+  old.ra_student_id ,
+  old.ra_application_id ,
+  old.ra_student_gpa_id ,
+  old.ra_student_major_id ,
+  old.ra_student_edu_id ,
+  old.created_by ,
+  old.created_date ,
+  old.modified_by ,
+  old.modified_date
+  ); 
+  
+ 
+  
+  END;

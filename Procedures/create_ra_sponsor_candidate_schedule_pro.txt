@@ -1,0 +1,22 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.create_ra_sponsor_candidate_schedule_pro;
+CREATE PROCEDURE abi_newadmin.`create_ra_sponsor_candidate_schedule_pro`(
+ in p_sponsor_id integer,
+ in p_interview integer, 
+ in p_hired varchar(255),
+ in p_interview_date timestamp,
+ in p_hiring_date timestamp,
+ in p_created_by varchar(255),
+ in p_ra_application_id integer
+ )
+begin 
+ 
+ 
+   insert into ra_sponsor_candidate_schedule
+   (sponsor_id,interview,hired,interview_date,hiring_date,created_by,ra_application_id)
+   values
+   (p_sponsor_id,p_interview,p_hired,p_interview_date,p_hiring_date,p_created_by,p_ra_application_id );
+        
+    
+ commit;
+ 
+ end;

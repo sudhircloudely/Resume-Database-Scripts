@@ -1,0 +1,23 @@
+CREATE TABLE `ra_app_career_information` (
+  `ra_career_inf_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ra_application_id` int(11) DEFAULT NULL,
+  `acadamic_program` varchar(255) DEFAULT NULL,
+  `acadamic_position` varchar(255) DEFAULT NULL,
+  `nonacadamic_position` varchar(255) DEFAULT NULL,
+  `employeement_type` varchar(255) DEFAULT NULL,
+  `area_intrest` varchar(255) DEFAULT NULL,
+  `current_job_status` varchar(255) DEFAULT NULL,
+  `start_employeement` varchar(255) DEFAULT NULL,
+  `find_employeement` varchar(255) DEFAULT NULL,
+  `additional_comment` varchar(255) DEFAULT NULL,
+  `break_question_1` varchar(255) DEFAULT NULL,
+  `break_question_2` varchar(255) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `resumeid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ra_career_inf_id`),
+  KEY `fk_app_career` (`ra_application_id`),
+  CONSTRAINT `fk_app_career` FOREIGN KEY (`ra_application_id`) REFERENCES `ra_application` (`ra_application_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6837 DEFAULT CHARSET=latin1;

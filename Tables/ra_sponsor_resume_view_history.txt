@@ -1,0 +1,9 @@
+CREATE TABLE `ra_sponsor_resume_view_history` (
+  `sponsor_id` int(11) DEFAULT NULL,
+  `ra_application_id` int(11) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  KEY `fk_ra_sponsor_resume_view_history` (`sponsor_id`),
+  KEY `fk_app_sponsor_resume` (`ra_application_id`),
+  CONSTRAINT `fk_app_sponsor_resume` FOREIGN KEY (`ra_application_id`) REFERENCES `ra_application` (`ra_application_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

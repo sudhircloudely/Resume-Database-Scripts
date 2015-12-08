@@ -1,0 +1,17 @@
+CREATE TABLE `ra_sponsor_candidate_schedule` (
+  `candidate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sponsor_id` int(11) DEFAULT NULL,
+  `interview` varchar(100) DEFAULT NULL,
+  `hired` varchar(100) DEFAULT NULL,
+  `interview_date` date DEFAULT NULL,
+  `hiring_date` date DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `modified_by` varchar(100) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `ra_application_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`candidate_id`),
+  KEY `fk_ra_sponsor_candidate_schedule` (`sponsor_id`),
+  KEY `fk_app_sponsor` (`ra_application_id`),
+  CONSTRAINT `fk_app_sponsor` FOREIGN KEY (`ra_application_id`) REFERENCES `ra_application` (`ra_application_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;

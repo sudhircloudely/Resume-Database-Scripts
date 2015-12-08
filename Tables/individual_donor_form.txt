@@ -1,0 +1,15 @@
+CREATE TABLE `individual_donor_form` (
+  `donor_id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `payment_type` varchar(255) NOT NULL,
+  `amount` varchar(255) NOT NULL,
+  `organization` varchar(255) DEFAULT NULL,
+  `organization_matching` tinyint(1) DEFAULT NULL,
+  `In_the_memory_of` varchar(255) DEFAULT NULL,
+  `unique_key` varchar(100) NOT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `submission_type` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`donor_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=730 DEFAULT CHARSET=latin1;

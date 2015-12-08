@@ -1,0 +1,10 @@
+DROP FUNCTION IF EXISTS abi_newadmin.get_ra_application_id_fnc;
+CREATE FUNCTION abi_newadmin.`get_ra_application_id_fnc`(p_resume_id int) RETURNS int(11)
+Begin
+ Declare r_ra_application_id int;
+ 
+   select ra_application_id into r_ra_application_id from ra_application where resumeid = p_resume_id;
+
+   return r_ra_application_id;
+
+End;

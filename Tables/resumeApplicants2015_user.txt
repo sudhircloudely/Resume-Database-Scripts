@@ -1,0 +1,10 @@
+CREATE TABLE `resumeApplicants2015_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resumeID` int(11) DEFAULT NULL,
+  `emailid` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `leadid` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `emailid` (`emailid`),
+  UNIQUE KEY `emailid_2` (`emailid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2649 DEFAULT CHARSET=latin1;

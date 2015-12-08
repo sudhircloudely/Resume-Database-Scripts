@@ -1,0 +1,141 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.update_ra_application_prc;
+CREATE PROCEDURE abi_newadmin.`update_ra_application_prc`(
+  IN p_ra_application_id int,
+  IN p_first_name  varchar(255),	 
+  IN p_last_name  varchar(255),	 
+  IN p_organization  varchar(255),	 
+  IN p_phone  varchar(255), 
+  IN p_address  varchar(255),	 
+  IN p_city  varchar(255),	 
+  IN p_ra_state_id  varchar(255),	 
+  IN p_region_province  varchar(255),	 
+  IN p_postal_zip_code  varchar(255),	 
+  IN p_ra_country_id  varchar(255),	 
+  IN p_us_citizen  varchar(255),	 
+  IN p_us_work_permit  varchar(255),	 
+  IN p_site  varchar(255),	 
+  IN p_india_citizen  varchar(255),	 
+  IN p_india_work_permit  varchar(255),	 
+  IN p_attending_abi_local  varchar(255),  
+  IN p_resume_name  varchar(255),	
+  IN p_contact_menthod varchar(255),
+  IN p_attending_GHC varchar(255),
+  IN p_modified_by varchar(255),	
+  IN p_applicant_type varchar(255),
+  
+  IN p_emailid varchar(255),	
+  IN p_sfdc_leadid varchar(255),	
+  IN p_password varchar(255),	
+  IN p_auth_key varchar(255),	
+  IN p_password_reset_token varchar(255),
+ 
+  IN p_ra_student_gpa_id varchar(255), 
+  IN p_ra_student_major_id varchar(255), 
+  IN p_ra_student_edu_id varchar(255), 
+ 
+  IN p_year_experience  varchar(255),	 
+  IN p_current_position  varchar(255),
+  IN p_current_title  varchar(255),	 
+  IN p_ra_industry_id  varchar(255),	 
+  IN p_industry_experience_other  varchar(255), 
+  IN p_skills  varchar(255),
+ 
+  IN p_acadamic_program varchar(255),
+  IN p_acadamic_position varchar(255),
+  IN p_nonacadamic_position varchar(255),
+  IN p_employeement_type varchar(255),
+  IN p_area_intrest varchar(255),
+  IN p_current_job_status varchar(255),
+  IN p_start_employeement varchar(255),	
+  IN p_find_employeement varchar(255),
+  IN p_additional_comment varchar(255),
+  IN p_break_question_1 varchar(255),	
+  IN p_break_question_2 varchar(255)
+ )
+BEGIN
+
+update ra_application
+set
+  first_name = case when p_first_name is null then first_name else p_first_name end,	 
+  last_name = case when p_last_name is null then last_name else p_last_name end,	 
+  organization = case when p_organization is null then organization else p_organization end,	 	 
+  phone = case when p_phone is null then phone else p_phone end, 
+  address = case when p_address is null then address else p_address end,	 
+  city = case when p_city is null then city else p_city end, 	 
+  ra_state_id = case when p_ra_state_id is null then ra_state_id else p_ra_state_id end, 	 
+  region_province = case when p_region_province is null then region_province else p_region_province end, 	 
+  postal_zip_code = case when p_postal_zip_code is null then postal_zip_code else p_postal_zip_code end, 	 	 
+  ra_country_id = case when p_ra_country_id is null then ra_country_id else p_ra_country_id end, 	 		 
+  us_citizen = case when p_us_citizen is null then us_citizen else p_us_citizen end, 	 		 	 
+  us_work_permit =  case when p_us_work_permit is null then us_work_permit else p_us_work_permit end, 	 
+  site =  case when p_site is null then site else p_site end,  	 
+  india_citizen = case when p_india_citizen is null then india_citizen else p_india_citizen end,	 
+  india_work_permit = case when p_india_work_permit is null then india_work_permit else p_india_work_permit end,	   
+  attending_abi_local = case when p_attending_abi_local is null then attending_abi_local else p_attending_abi_local end,   
+  resume_name = case when p_resume_name is null then resume_name else p_resume_name end,   
+  contact_menthod = case when p_contact_menthod is null then contact_menthod else p_contact_menthod end,    
+  attending_GHC =  case when p_attending_GHC is null then attending_GHC else p_attending_GHC end,   
+  modified_by = p_modified_by,
+  modified_date = CURDATE(),
+  applicant_type =   case when p_applicant_type is null then applicant_type else p_applicant_type end 
+where
+   ra_application_id = p_ra_application_id;
+  
+
+
+update ra_user
+set
+  emailid  = 	case when p_emailid is null then emailid else p_emailid end,  
+  password = 	   case when p_password is null then password  else p_password end,  
+  auth_key =   case when p_auth_key is null then auth_key  else p_auth_key end,  
+  password_reset_token =    case when p_password_reset_token is null then password_reset_token  else p_password_reset_token end,
+  modified_by = p_modified_by,
+  modified_date = CURDATE()
+where
+  ra_application_id = p_ra_application_id; 
+ 
+
+update ra_app_student_information
+set
+ ra_student_gpa_id = case when p_ra_student_gpa_id is null then ra_student_gpa_id else p_ra_student_gpa_id end,
+ ra_student_major_id = case when p_ra_student_major_id is null then ra_student_major_id else p_ra_student_major_id end,
+ ra_student_edu_id =  case when p_ra_student_edu_id is null then ra_student_edu_id else p_ra_student_edu_id end,
+ modified_by = p_modified_by,
+ modified_date = CURDATE()
+where
+  ra_application_id = p_ra_application_id; 
+  
+ update ra_app_professional_information
+ set
+ year_experience = case when p_year_experience is null then year_experience else p_year_experience end,	 
+ current_position = case when p_current_position is null then current_position else p_current_position end,
+ current_title = case when p_current_title is null then current_title else p_current_title end,
+ ra_industry_id = case when p_ra_industry_id is null then ra_industry_id else p_ra_industry_id end,	 
+ industry_experience_other = case when p_industry_experience_other is null then industry_experience_other else p_industry_experience_other end, 
+ skills = case when p_skills is null then skills else p_skills end,
+ modified_by = p_modified_by,
+ modified_date = CURDATE()
+where
+  ra_application_id = p_ra_application_id;
+  
+  
+ update ra_app_career_information
+ set 
+ current_job_status = case when p_current_job_status is null then current_job_status else p_current_job_status end,	
+ start_employeement = case when p_start_employeement is null then start_employeement else p_start_employeement end,
+ find_employeement = case when p_find_employeement is null then find_employeement else p_find_employeement end,	
+ additional_comment = case when p_additional_comment is null then additional_comment else p_additional_comment end,
+ break_question_1 = case when p_break_question_1 is null then break_question_1 else p_break_question_1 end,	
+ break_question_2 = case when p_break_question_2 is null then break_question_2 else p_break_question_2 end,
+ acadamic_program = case when p_acadamic_program is null then acadamic_program else p_acadamic_program end,   
+ acadamic_position = case when p_acadamic_position is null then acadamic_position else p_acadamic_position end,   
+ nonacadamic_position = case when p_nonacadamic_position is null then nonacadamic_position else p_nonacadamic_position end,    
+ employeement_type =  case when p_employeement_type is null then employeement_type else p_employeement_type end,     
+ area_intrest = case when p_area_intrest is null then area_intrest else p_area_intrest end,        
+ 
+ modified_by = p_modified_by,
+ modified_date = CURDATE()
+ where
+  ra_application_id = p_ra_application_id; 
+  
+END;

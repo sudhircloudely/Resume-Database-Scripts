@@ -1,0 +1,19 @@
+DROP FUNCTION IF EXISTS abi_newadmin.update_applicant_type_fnc;
+CREATE FUNCTION abi_newadmin.`update_applicant_type_fnc`(p_resume_id int ) RETURNS varchar(255) CHARSET latin1
+Begin
+
+Declare l_applicant_type varchar(255);
+
+ select 
+   case when site_year = 'GHC-2015' then  student_info_chk
+        when site_year = 'GHCI-2015' then  usertype
+   end  as sites into l_applicant_type
+  from 
+  resumeApplicants2015
+  where
+  resumeID = p_resume_id;
+  
+  return l_applicant_type;
+
+
+End;

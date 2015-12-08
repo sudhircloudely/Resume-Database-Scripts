@@ -1,0 +1,19 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.delete_email_new_tab_proc;
+CREATE PROCEDURE abi_newadmin.`delete_email_new_tab_proc`(IN p_email varchar(255) )
+Begin
+
+   delete from ra_app_career_information where ra_application_id = 
+   (select ra_application_id from ra_user where emailid = p_email);
+    
+   delete from ra_app_professional_information where ra_application_id = 
+   (select ra_application_id from ra_user where emailid = p_email);
+ 
+   delete from ra_app_student_information where ra_application_id = 
+   (select ra_application_id from ra_user where emailid = p_email);
+   
+   delete from ra_application where ra_application_id = 
+  (select ra_application_id from ra_user where emailid = p_email);
+
+   delete from ra_user where emailid = p_email;
+
+End;

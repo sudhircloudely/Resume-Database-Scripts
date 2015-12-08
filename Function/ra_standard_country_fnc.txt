@@ -1,0 +1,11 @@
+DROP FUNCTION IF EXISTS abi_newadmin.ra_standard_country_fnc;
+CREATE FUNCTION abi_newadmin.`ra_standard_country_fnc`(p_countryname varchar(255)) RETURNS int(11)
+BEGIN
+  declare p_country_id int;
+  
+   select ra_country_id into p_country_id from ra_standard_country 
+   where upper(name) = upper(p_countryname);
+   
+     return p_country_id;
+
+END;

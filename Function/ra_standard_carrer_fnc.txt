@@ -1,0 +1,13 @@
+DROP FUNCTION IF EXISTS abi_newadmin.ra_standard_carrer_fnc;
+CREATE FUNCTION abi_newadmin.`ra_standard_carrer_fnc`(p_int int, p_prefix varchar(255),p_value varchar(255)) RETURNS int(11)
+BEGIN
+  declare p_career_id int;
+  
+   select ra_career_id into p_career_id from ra_standard_carrer 
+   where ra_career_id = p_int and
+         prefix = p_prefix and  
+         p_value = 'Yes';
+   
+     return p_career_id;
+
+END;

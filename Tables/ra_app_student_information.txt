@@ -1,0 +1,15 @@
+CREATE TABLE `ra_app_student_information` (
+  `ra_student_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ra_application_id` int(11) DEFAULT NULL,
+  `ra_student_gpa_id` varchar(255) DEFAULT NULL,
+  `ra_student_major_id` varchar(255) DEFAULT NULL,
+  `ra_student_edu_id` varchar(255) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `resumeid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ra_student_id`),
+  KEY `fk_app_studen` (`ra_application_id`),
+  CONSTRAINT `fk_app_studen` FOREIGN KEY (`ra_application_id`) REFERENCES `ra_application` (`ra_application_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6837 DEFAULT CHARSET=latin1;

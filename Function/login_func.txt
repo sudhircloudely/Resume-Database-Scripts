@@ -1,0 +1,10 @@
+DROP FUNCTION IF EXISTS abi_newadmin.login_func;
+CREATE FUNCTION abi_newadmin.`login_func`(p_email varchar(255), 
+                            p_password varchar(255)) RETURNS int(11)
+BEGIN 
+  DECLARE authorized integer;
+  
+  select 1 into authorized from resumeApplicants2015_user where emailid = p_email and password = p_password;
+  
+  RETURN authorized;
+END;

@@ -1,0 +1,11 @@
+CREATE TABLE `org_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comp_id` varchar(500) NOT NULL,
+  `org_name` varchar(500) NOT NULL,
+  `logo_check` int(11) NOT NULL,
+  `printed_check` int(11) NOT NULL,
+  `book_check` int(11) NOT NULL,
+  `conference_check` int(11) NOT NULL,
+  `active` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=latin1;

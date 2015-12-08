@@ -1,0 +1,35 @@
+CREATE DEFINER=`abi_newadmn`@`%` TRIGGER `abi_newadmin`.`audit_ra_user_trg` BEFORE UPDATE ON abi_newadmin.ra_user FOR EACH ROW
+BEGIN
+  
+    INSERT INTO audit_ra_user
+  (
+  ra_user_id,
+  ra_application_id,
+  emailid,
+  password,
+  sfdc_leadid,
+  auth_key,
+  password_reset_token,
+  created_by,
+  created_date,
+  modified_by,
+  modified_date 
+  )
+  values
+  (
+  old.ra_user_id,
+  old.ra_application_id,
+  old.emailid,
+  old.password,
+  old.sfdc_leadid,
+  old.auth_key,
+  old.password_reset_token,
+  old.created_by,
+  old.created_date,
+  old.modified_by,
+  old.modified_date 
+  ); 
+  
+ 
+  
+  END;

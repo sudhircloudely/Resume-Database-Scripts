@@ -1,0 +1,17 @@
+CREATE TABLE `audit_ra_app_career_information` (
+  `ra_career_inf_id` int(11) NOT NULL,
+  `ra_application_id` int(11) DEFAULT NULL,
+  `acadamic_program` varchar(255) DEFAULT NULL,
+  `acadamic_position` varchar(255) DEFAULT NULL,
+  `nonacadamic_position` varchar(255) DEFAULT NULL,
+  `employeement_type` varchar(255) DEFAULT NULL,
+  `area_intrest` varchar(255) DEFAULT NULL,
+  `current_job_status` varchar(255) DEFAULT NULL,
+  `start_employeement` varchar(255) DEFAULT NULL,
+  `find_employeement` varchar(255) DEFAULT NULL,
+  `additional_comment` varchar(255) DEFAULT NULL,
+  `break_question_1` varchar(255) DEFAULT NULL,
+  `break_question_2` varchar(255) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;

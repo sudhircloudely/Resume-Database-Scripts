@@ -1,0 +1,19 @@
+CREATE TABLE `upload_logo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comp_name` varchar(500) NOT NULL,
+  `comp_id` int(11) NOT NULL,
+  `logoname` varchar(500) NOT NULL,
+  `notes` varchar(500) NOT NULL,
+  `created` datetime NOT NULL,
+  `active` int(11) NOT NULL,
+  `fname` varchar(500) NOT NULL,
+  `lname` varchar(500) NOT NULL,
+  `emailid` varchar(500) NOT NULL,
+  `oth_comp_name` varchar(500) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'Submitted',
+  `Date Modified` datetime NOT NULL,
+  `cname` varchar(50) DEFAULT NULL,
+  `website_url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=285 DEFAULT CHARSET=latin1;

@@ -1,0 +1,20 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.create_ra_sponsor_session_timeout_pro;
+CREATE PROCEDURE abi_newadmin.`create_ra_sponsor_session_timeout_pro`(
+ in p_sponsor_id integer,
+ in p_time_in datetime,
+ in p_time_out datetime
+ )
+begin
+ 
+ 
+    
+ insert into ra_sponsor_session_timeout
+ ( sponsor_id,time_in,time_out)
+ values
+ (p_sponsor_id,p_time_in,p_time_out);
+ 
+ commit;
+ 
+ 
+ 
+ end;

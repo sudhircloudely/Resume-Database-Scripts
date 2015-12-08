@@ -1,0 +1,10 @@
+DROP FUNCTION IF EXISTS abi_newadmin.ra_standard_industry_fnc;
+CREATE FUNCTION abi_newadmin.`ra_standard_industry_fnc`( p_int int, p_value varchar(255)) RETURNS int(11)
+BEGIN
+  declare p_industry_id int;
+  
+   select ra_industry_id into p_industry_id from ra_standard_industry where ra_industry_id = p_int and p_value = 'Yes';
+   
+     return p_industry_id;
+
+END;

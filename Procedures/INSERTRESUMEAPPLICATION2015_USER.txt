@@ -1,0 +1,12 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.INSERTRESUMEAPPLICATION2015_USER;
+CREATE PROCEDURE abi_newadmin.`INSERTRESUMEAPPLICATION2015_USER`( IN p_emailid varchar(255), 
+  IN p_password varchar(255), 
+  IN p_resumeID varchar(255), 
+  IN p_leadid  varchar(255) )
+BEGIN
+INSERT INTO resumeApplicants2015_user 
+(emailid,password,resumeID,leadid) 
+VALUES 
+(p_emailid,p_password,p_resumeID,p_leadid);
+
+END;

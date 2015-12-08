@@ -1,0 +1,63 @@
+CREATE DEFINER=`abi_newadmn`@`%` TRIGGER `abi_newadmin`.`audit_ra_application_trg` BEFORE UPDATE ON abi_newadmin.ra_application FOR EACH ROW
+BEGIN
+  
+    INSERT INTO audit_ra_application
+  (
+  ra_application_id,
+  first_name ,
+  last_name ,
+  organization ,
+  phone ,
+  address ,
+  city ,
+  ra_state_id ,
+  region_province ,
+  postal_zip_code ,
+  ra_country_id ,
+  us_citizen ,
+  us_work_permit ,
+  site ,
+  india_citizen ,
+  india_work_permit ,
+  attending_abi_local ,
+  contact_menthod ,
+  attending_GHC ,
+  resume_name ,
+  created_by ,
+  created_date ,
+  modified_by ,
+  modified_date,
+  applicant_type
+  )
+  values
+  (
+  old.ra_application_id,
+  old.first_name ,
+  old.last_name ,
+  old.organization ,
+  old.phone ,
+  old.address ,
+  old.city ,
+  old.ra_state_id ,
+  old.region_province ,
+  old.postal_zip_code ,
+  old.ra_country_id ,
+  old.us_citizen ,
+  old.us_work_permit ,
+  old.site ,
+  old.india_citizen ,
+  old.india_work_permit ,
+  old.attending_abi_local ,
+  old.contact_menthod ,
+  old.attending_GHC ,
+  old.resume_name ,
+  old.created_by ,
+  old.created_date ,
+  old.modified_by ,
+  old.modified_date,
+  applicant_type
+  ); 
+  
+ 
+  
+  END;

@@ -1,0 +1,17 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.create_ra_sponsor_resume_view_history_pro;
+CREATE PROCEDURE abi_newadmin.`create_ra_sponsor_resume_view_history_pro`(
+ in p_sponsor_id integer,
+ in p_ra_application_id integer,    
+ in p_created_by varchar(255) )
+begin 
+ 
+  
+   insert into ra_sponsor_resume_view_history
+   (sponsor_id,ra_application_id,created_by,created_date)
+   values
+   (p_sponsor_id,p_ra_application_id,p_created_by,now() );
+        
+    
+ commit;
+  
+ end;

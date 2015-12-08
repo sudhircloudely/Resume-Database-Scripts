@@ -1,0 +1,29 @@
+CREATE DEFINER=`abi_newadmn`@`%` TRIGGER `abi_newadmin`.`update_site_year_trg` AFTER INSERT ON abi_newadmin.resumeApplicants2015 FOR EACH ROW
+BEGIN
+   DECLARE l_site varchar(255);
+   DECLARE l_year varchar(255);
+   DECLARE l_site_year varchar(255);
+      
+     select site,year,substr(site_year,1,4) into l_site,l_year,l_site_year 
+     from resumeApplicants2015 where resumeID = new.resumeID;
+     
+       If  l_site = '' or l_site is null or l_site = null then
+             
+            update resumeApplicants2015
+            set 
+            site = case when l_site_year = 'GHC-' then 'GHC' else  l_site_year end       
+            where resumeID = new.resumeID;              
+             
+       End if;     
+   
+      If l_year = '' or l_year is null or l_year = null then
+   
+        update resumeApplicants2015
+        set
+        year = 2015
+        where 
+        resumeID = new.resumeID;  
+  
+      End if;
+  
+  END;

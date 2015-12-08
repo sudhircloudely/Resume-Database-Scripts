@@ -1,0 +1,15 @@
+DROP PROCEDURE IF EXISTS abi_newadmin.delete_sponsor_email_prc;
+CREATE PROCEDURE abi_newadmin.`delete_sponsor_email_prc`( in pemail varchar(255) )
+Begin
+
+delete from ra_sponsor_resume_view_history
+where
+sponsor_id  = ( select sponsor_id  from ra_sponsor_users where upper(email_id) = upper(pemail) );
+
+delete from ra_sponsor_candidate_schedule
+where
+sponsor_id  = ( select sponsor_id  from ra_sponsor_users where upper(email_id) = upper(pemail) );
+
+delete from ra_sponsor_users where upper(email_id) = upper(pemail);
+
+End;
